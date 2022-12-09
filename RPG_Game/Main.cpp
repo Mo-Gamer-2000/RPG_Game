@@ -22,22 +22,129 @@ void Moving();
 void CreateMonster();
 
 // Global Variables for Characheter Below;
-string CharachterName = " ";
-string CharachterType = " ";
-string CharachterGender = " ";
+string charName = " ";
+string charType = " ";
+string charGender = " ";
 
-int CharachterLevel = 0;
-int CharachterXP = 0;
-int CharachterHealth = 0;
-int CharachterMaxHealth = 0;
-int CharachterLevelUP = 0;
-int CharachterHeal = 0;
+int charLevel = 0;
+int charXP = 0;
+int charHealth = 0;
+int charTotalHealth = 0;
+int charMaxHealth = 0;
+int charLevelUP = 0;
+int charHeal = 0;
 
 // Global Variables for Monster Below;
-int MonsterHP = 0;
-int MonsterXP = 0;
-int MonsterLevel = 0;
+int monsterHP = 0;
+int monsterXP = 0;
+int monsterLevel = 0;
+
+// Monster Names Array / Global Variables Below;
+string monsterName[] = { "Goblin", "Dwarf", "Orge", "Witch", "Demon","Wizard" };
+string currentMonster = " ";
 // Main Function
 int main() {
-	
+
+	// Creating Level Up and Health System
+	charLevel = 1;
+	charXP = 0;
+	charHealth = 100;
+	charLevelUP = 80;
+	charTotalHealth = charHealth;
+	charMaxHealth = charTotalHealth;
+
+	// Taking Charachter Data out And taking in to Assign to the Charachter Variables
+	// Creating Charachter
+	cout << "Enter the Charachter Name: ";
+	cin >> charName;
+
+	cout << "Enter the Charachter Type: ";
+	cin >> charType;
+
+	cout << "Enter the Charachter Gender: ";
+	cin >> charGender;
+
+	// Small Little animation of Creating the Charachter
+	cout << "Creating Charachter. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter.. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter... \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter.. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter... \n";
+	Sleep(300);
+	system("cls");
+	cout << "Creating Charachter. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter.. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter... \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Charachter Created! \n";
+	Sleep(800);
+	system("cls");
+
+	HUD();
+	Moving();
+
+	system("pause");
+
+	return 0;
+}
+// Created a basic Heads up Display of Charchter Details
+void HUD() {
+	Sleep(500);
+	system("cls");
+	cout << "Name: " << charName << "\nHealth: " << charTotalHealth << "\nType: " << charType
+		<< "\nGender: " << charGender << "\nLevel: " << charLevel << "\nXP: " << charXP
+		<< "\nXP to Level Up: " << charLevelUP << endl;
+}
+
+// Charachter Movment
+void Moving() {
+
+	int selection;
+
+	cout << "\n\n";
+	cout << "1. Move Forward\n";
+	cout << "2. Have Rest\n";
+	cout << "3. Move Backwards\n";
+	cout << "\n\n";
+
+	cin >> selection;
+
+	if (selection == 1) {
+		// Do Do
+	}
+	else if (selection == 2) {
+		// Do Do
+	}
+	else if (selection == 3) {
+		// Do Do
+	}
+	else {
+		cout << "Inavlid Selection. Please, Try Again!";
+		Sleep(500);
+		Moving();
+	}
 }
