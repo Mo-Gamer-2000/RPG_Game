@@ -137,12 +137,91 @@ void CombatHUD() {
 	system("cls");
 	cout << "Name: " << charName << "		|		Monster Name: " << currentMonster << "\nHealth: " << charTotalHealth << "		|		Monster Health: " << monsterHP << 
 		"\nLevel: " << charLevel << "		|		Monster Level: " << monsterLevel << endl;
-	Moving();
 }
 
 // Charachter Combat
 void Combat() {
-	// Do Do
+	// CombatHud brought,attack and demage values added and CharChoice
+	CombatHUD();
+	int charChoice;
+	int charDemage = 8 * charLevel / 2;
+	int monsterAttack = 6 * monsterLevel / 2;
+
+	if (charTotalHealth >= 1 && monsterHP >= 1) {
+		cout << "\n";
+		cout << "1. Attack\n";
+		cout << "2. Block\n";
+		cout << "3. RUN!\n";
+		cout << "\n";
+		cin >> charChoice;
+
+		if (charChoice == 1) {
+			// ATTACK
+			cout << "Attacking... You did: " << charDemage << " to the " << currentMonster << endl;
+			monsterHP = monsterHP - charDemage;
+			Sleep(1000);
+			CombatHUD();
+
+			if (monsterHP >= 1) {
+				cout << "\n";
+				cout << "Monster is Attacking!\n";
+				charTotalHealth = charTotalHealth - monsterAttack;
+				cout << "You just got Attacked by: " << currentMonster << "You have Lost: " << monsterAttack << " HP " << "You Health is now: " << charTotalHealth << endl;
+
+				// Change to Function.
+				if (charTotalHealth <= 0) {
+					charTotalHealth = 0;
+				}
+			}
+			else if (monsterHP <= 0) {
+				monsterHP = 0;
+			}
+			Sleep(1000);
+			Combat();
+		}
+		else if (charChoice == 2) {
+			// BLOCK
+			cout << "Blocking\n";
+			int i = rand() % 100 + 1;
+			if (i >= 50) {
+				cout << "You have Blocked the Attack!\n";
+				charHeal = charLevel * 10 / 2;
+				cout << "You have Healed: " << charHeal << "HP" << endl;
+				charTotalHealth += charHeal;
+				Sleep(1000);
+				Combat();
+			}
+			else {
+				cout << "You hav Failed to Block the Monster Attack\n";
+				charTotalHealth -= monsterAttack;
+				cout << "You were Attacked for: " << monsterAttack << "Your HP is now: " << charTotalHealth << endl;
+				Sleep(1000);
+				Combat();
+			}
+		}
+		else if (charChoice == 3) {
+			// RUN!!!
+			cout << "You try to Run!\n";
+			int x = rand() % 100 +1;
+			if (x >= 50) {
+				cout << "You Ran awey from the Battle!\n";
+				HUD();
+			}
+			else {
+				cout << "You have Failed to Run awey!\n";
+				cout << "Monster Attacked you!\n";
+				charTotalHealth -= monsterAttack + 10;
+				cout << "You Suffered " << monsterAttack + 10 << "You current Health is: " << charTotalHealth << endl;
+				Sleep(1000);
+				Combat();
+			}
+		}
+		else {
+			cout << "Inavlid Selection. Please, Try Again!";
+			Sleep(500);
+			Combat();
+		}
+	}
 }
 
 // Charachter Movment
