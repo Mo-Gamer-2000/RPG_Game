@@ -55,6 +55,12 @@ int main() {
 	charTotalHealth = charHealth;
 	charMaxHealth = charTotalHealth;
 
+	cout << "####################### \n";
+	cout << "# SURVIVAL 'RPG' GAME # \n";
+	cout << "####################### \n";
+	Sleep(3000);
+	system("cls");
+
 	// Taking Charachter Data out And taking in to Assign to the Charachter Variables
 	// Creating Charachter
 	cout << "Enter the Charachter Name: ";
@@ -118,6 +124,7 @@ int main() {
 void HUD() {
 	Sleep(500);
 	system("cls");
+	cout << "Charachter information: \n";
 	cout << "Name: " << charName << "\nHealth: " << charTotalHealth << "\nType: " << charType
 		<< "\nGender: " << charGender << "\nLevel: " << charLevel << "\nXP: " << charXP
 		<< "\nXP to Level Up: " << charLevelUP << endl;
@@ -143,13 +150,17 @@ void Moving() {
 
 	int selection;
 
-	cout << "\n\n";
+	cout << "\n";
+	cout << "What would you Like to do Next?: " << charName << endl;
+	cout << "\n";
 	cout << "1. Move Forward\n";
 	cout << "2. Have Rest\n";
 	cout << "3. Move Backwards\n";
-	cout << "\n\n";
+	cout << "\n";
 
+	cout << "Type Your Selection Here: ";
 	cin >> selection;
+	cout << "\n";
 	// Moving Forward Selection Created
 	if (selection == 1) {
 		// Random Randit used to move the charachter by 1
@@ -161,12 +172,12 @@ void Moving() {
 			// Encoutering Random Monster
 			CreateMonster();
 			string tempName = monsterName[rand() % currentMonsterNames];
-			cout << " A " << tempName << "Get Ready for The Battle!!!\n";
+			cout << "You Came Across a: " << tempName << " ,Get Ready for The Battle!!!\n";
 			currentMonster = tempName;
 			Sleep(1000);
 			Combat();
 		}
-		cout << "You Have Found Nothing Inteeresting.\n";
+		cout << "You Have Found Nothing Interesting.\n";
 			Sleep(1000);
 			HUD();
 
@@ -194,12 +205,12 @@ void Moving() {
 			// Encoutering Random Monster
 			CreateMonster();
 			string tempName = monsterName[rand() % currentMonsterNames];
-			cout << " A " << tempName << "Get Ready for The Battle!!!\n";
+			cout << "You Came Across a: " << tempName << " ,Get Ready for The Battle!!!\n";
 			currentMonster = tempName;
 			Sleep(1000);
 			Combat();
 		}
-		cout << "You Have Found Nothing Inteeresting.\n";
+		cout << "You Have Found Nothing Interesting.\n";
 		Sleep(1000);
 		HUD();
 	}
