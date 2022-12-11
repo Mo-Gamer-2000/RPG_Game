@@ -40,8 +40,10 @@ int monsterXP = 0;
 int monsterLevel = 0;
 
 // Monster Names Array / Global Variables Below;
-string monsterName[] = { "Goblin", "Dwarf", "Orge", "Witch", "Demon","Wizard" };
+string monsterName[] = { "Goblin", "Dwarf", "Orge", "Witch", "Demon", "Wizard" };
+int currentMonsterNames = 5;
 string currentMonster = " ";
+
 // Main Function
 int main() {
 
@@ -111,6 +113,7 @@ int main() {
 
 	return 0;
 }
+
 // Created a basic Heads up Display of Charchter Details
 void HUD() {
 	Sleep(500);
@@ -118,6 +121,21 @@ void HUD() {
 	cout << "Name: " << charName << "\nHealth: " << charTotalHealth << "\nType: " << charType
 		<< "\nGender: " << charGender << "\nLevel: " << charLevel << "\nXP: " << charXP
 		<< "\nXP to Level Up: " << charLevelUP << endl;
+	Moving();
+}
+
+// Created a basic Heads up Display of Comabat Details
+void CombatHUD() {
+	Sleep(500);
+	system("cls");
+	cout << "Name: " << charName << "		|		Monster Name: " << currentMonster << "\nHealth: " << charTotalHealth << "		|		Monster Health: " << monsterHP << 
+		"\nLevel: " << charLevel << "		|		Monster Level: " << monsterLevel << endl;
+	Moving();
+}
+
+// Charachter Combat
+void Combat() {
+	// Do Do
 }
 
 // Charachter Movment
@@ -132,19 +150,91 @@ void Moving() {
 	cout << "\n\n";
 
 	cin >> selection;
-
+	// Moving Forward Selection Created
 	if (selection == 1) {
-		// Do Do
+		// Random Randit used to move the charachter by 1
+		// If int temp greater then or equal to 50, then we encounter a (RANDOM) Monster
+		int temp = rand() % 100 + 1;
+		cout << "You Have Just Moved Forward...\n";
+		if (temp >= 50) {
+			// Encounter a Monster Function
+			// Encoutering Random Monster
+			CreateMonster();
+			string tempName = monsterName[rand() % currentMonsterNames];
+			cout << " A " << tempName << "Get Ready for The Battle!!!\n";
+			currentMonster = tempName;
+			Sleep(1000);
+			Combat();
+		}
+		cout << "You Have Found Nothing Inteeresting.\n";
+			Sleep(1000);
+			HUD();
+
 	}
+	// Resting Selection Created
 	else if (selection == 2) {
-		// Do Do
+		// Text and if Char helth less then or equal to 99
+		// Then Char heals it self by 10 * charLevel
+		cout << "You Have Set up a Cozy Camp for The Evening.\n";
+		if (charTotalHealth <= 99) {
+			charTotalHealth += 10 * charLevel;
+		}
+		cout << "You Have Healed by Resting. Health is now: " << charTotalHealth << endl;
+		Sleep(1000);
+		HUD();
 	}
+	// Moving Backward Selection Created
 	else if (selection == 3) {
-		// Do Do
+		// Random Randit used to move the charachter by 1
+		// If int temp greater then or equal to 50, then we encounter a (RANDOM) Monster
+		int temp = rand() % 100 + 1;
+		cout << "You Have Just Moved Backwards...\n";
+		if (temp >= 50) {
+			// Encounter a Monster Function
+			// Encoutering Random Monster
+			CreateMonster();
+			string tempName = monsterName[rand() % currentMonsterNames];
+			cout << " A " << tempName << "Get Ready for The Battle!!!\n";
+			currentMonster = tempName;
+			Sleep(1000);
+			Combat();
+		}
+		cout << "You Have Found Nothing Inteeresting.\n";
+		Sleep(1000);
+		HUD();
 	}
 	else {
 		cout << "Inavlid Selection. Please, Try Again!";
 		Sleep(500);
 		Moving();
 	}
+}
+
+// Create Monster
+void CreateMonster() {
+	monsterHP = 30;
+	monsterLevel = (rand() % 3) + charLevel;
+
+	// If Monster level equal 0 then monster level value goes between 3 + charLevel
+	// This is to stop monster to have health 0
+	if (monsterLevel == 0) {
+		monsterLevel = (rand() % 3) + charLevel;
+	}
+
+	// Monster health random value betweeen 30 and charTotalHealth
+	// May need to fix this value
+	monsterHP = (rand() % 30) * charTotalHealth;
+
+	// If monster health 0 then random between 30 and charTotalhealth
+	/*if (monsterHP == 0) {
+		monsterHP = (rand() % 30) * charTotalHealth;
+	}*/
+	// XP given = HP of the Monster
+	monsterXP = monsterHP;
+
+	// If monsterHP = 0 then execute the function Again
+	if (monsterHP == 0)
+		CreateMonster();
+	if (monsterLevel == 0)
+		CreateMonster();
 }
