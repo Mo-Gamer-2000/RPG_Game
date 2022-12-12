@@ -21,6 +21,9 @@ void Moving();
 // Function CreateMonster
 void CreateMonster();
 
+// Function LevelUP
+void LevelUP();
+
 // Global Variables for Characheter Below;
 string charName = " ";
 string charType = " ";
@@ -143,6 +146,7 @@ void CombatHUD() {
 void Combat() {
 	// CombatHud brought,attack and demage values added and CharChoice
 	CombatHUD();
+
 	int charChoice;
 	int charDemage = 8 * charLevel / 2;
 	int monsterAttack = 6 * monsterLevel / 2;
@@ -171,10 +175,20 @@ void Combat() {
 				// Change to Function.
 				if (charTotalHealth <= 0) {
 					charTotalHealth = 0;
+					system("cls");
+					cout << "You Died! \n You were Level: " << charLevel << "you got Killed by " << currentMonster << endl;
+					Sleep(2000);
+					exit(0);
+
 				}
 			}
 			else if (monsterHP <= 0) {
 				monsterHP = 0;
+				LevelUP();
+				cout << "\n";
+				cout << "You have Beaten " << currentMonster << " you have been Rewarded with " << monsterXP << "XP.\nMission Completed!\n";
+				Sleep(1000);
+				HUD();
 			}
 			Sleep(1000);
 			Combat();
@@ -300,6 +314,22 @@ void Moving() {
 	}
 }
 
+// Charachter LevelUP
+void LevelUP() {
+	charXP = charXP + monsterXP;
+
+	// Level up feature below
+	if (charXP >= charLevelUP) {
+		charLevel++;
+		charLevelUP = charLevelUP * 3 / 2;
+		charTotalHealth = charTotalHealth + 20;
+		charMaxHealth = charTotalHealth;
+		cout << "Hey, " << charName << "You have just been Leveled-up! " << charLevel << endl;
+		cout << "You Max Health has been Incresead by 20 HP. You total Health is now: " << charTotalHealth << endl;
+		Sleep(2000);
+		HUD();
+	}
+}
 // Create Monster
 void CreateMonster() {
 	monsterHP = 30;
@@ -307,13 +337,13 @@ void CreateMonster() {
 
 	// If Monster level equal 0 then monster level value goes between 3 + charLevel
 	// This is to stop monster to have health 0
-	if (monsterLevel == 0) {
-		monsterLevel = (rand() % 3) + charLevel;
-	}
+	//if (monsterLevel == 0) {
+	//	monsterLevel = (rand() % 3) + charLevel;
+	//}
 
 	// Monster health random value betweeen 30 and charTotalHealth
 	// May need to fix this value
-	monsterHP = (rand() % 30) * charTotalHealth;
+	monsterHP = (rand() % 30) * monsterLevel;
 
 	// If monster health 0 then random between 30 and charTotalhealth
 	/*if (monsterHP == 0) {
