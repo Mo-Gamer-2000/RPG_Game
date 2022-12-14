@@ -19,13 +19,17 @@ public:
 	// Monster Type Array
 	vector<string> playerType;
 
-	int charLevel;
-	int charXP;
 	int charHealth;
 	int charTotalHealth;
 	int charMaxHealth;
-	int charLevelUP ;
 	int charHeal;
+
+	int level;
+	int current_XP;
+	int base_XP;
+	int levelUpXP;
+	int minLevel;
+	int maxLevel;
 
 
 

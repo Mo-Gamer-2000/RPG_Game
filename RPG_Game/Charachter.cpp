@@ -3,30 +3,30 @@
 Charachter::Charachter()
 {
 	// Global Variables for Characheter Below;
-	string charName = " ";
-	string charType = " ";
-	string charGender = " ";
+	charName = " ";
+	charType = " ";
+	charGender = " ";
 
-	playerType = { "eld", "dwarf", "firelord", "goblin", "human" };
+	playerType = { "elf", "dwarf", "firelord", "goblin", "human" };
 
-	int charLevel = 0;
-	int charXP = 0;
-	int charHealth = 0;
-	int charTotalHealth = 0;
-	int charMaxHealth = 0;
-	int charLevelUP = 0;
-	int charHeal = 0;
+	level = 0;
+	charHealth = 100;
+	charTotalHealth = 0;
+	charMaxHealth = 0;
+	charHeal = 0;
+
+	level = 1;
+	current_XP = 0;
+	base_XP = 80;
+	minLevel = 1;
+	maxLevel = 10;
+	levelUpXP = base_XP;
 }
 
 void Charachter::charachterCreation() {
 
 	// Counter
 	int counter = 0;
-
-	// Creating Level Up and Health System
-	charLevel = 1;
-	charXP = 0;
-	charLevelUP = 80;
 
 	cout << "####################### \n";
 	cout << "# SURVIVAL 'RPG' GAME # \n";
@@ -78,7 +78,9 @@ void Charachter::charachterCreation() {
 			break;
 		}
 		else {
-			charType = 100;
+			charType = "Viking";
+			charHealth = 200;
+			break;
 		}
 	}
 
