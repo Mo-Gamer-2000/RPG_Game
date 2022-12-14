@@ -2,6 +2,7 @@
 #include <iostream>
 #include <windows.h>
 #include <string>
+#include <algorithm>
 
 // Using Directive
 using namespace std;
@@ -47,17 +48,20 @@ string monsterName[] = { "Goblin", "Dwarf", "Orge", "Witch", "Demon", "Wizard" }
 int currentMonsterNames = 5;
 string currentMonster = " ";
 
+// Counter created for loading screen
+int counter = 3;
+
+// Monster Type Array
+string playerType[] = {"eld", "dwarf", "firelord", "goblin", "human"};
+
 // Main Function
 int main() {
 
 	// Creating Level Up and Health System
 	charLevel = 1;
 	charXP = 0;
-	charHealth = 100;
 	charLevelUP = 80;
-	charTotalHealth = charHealth;
-	charMaxHealth = charTotalHealth;
-
+	
 	cout << "####################### \n";
 	cout << "# SURVIVAL 'RPG' GAME # \n";
 	cout << "####################### \n";
@@ -69,14 +73,74 @@ int main() {
 	cout << "Enter the Charachter Name: ";
 	cin >> charName;
 
-	cout << "Enter the Charachter Type: ";
+	// Charachter Options
+	cout << "Enter the Charachter Type: \n";
+	cout << "Elf\n";
+	cout << "Dwarf\n";
+	cout << "Fire Lord\n";
+	cout << "goblin\n";
+	cout << "Human\n";
+	cout << "Type Here: \n\n";
 	cin >> charType;
 
+	// this sets the cin the player input into lowercase so it,
+	// matches the charType Array
+	for_each(charType.begin(), charType.end(), [](char & c) {
+		c = tolower(c);
+		});
+	// for loop for each charachter with their default HP when,
+	// selecting charachter
+	for (int i = 0; i < sizeof(playerType); i++) {
+		if (charType == "elf") {
+			charHealth = 80;
+			break;
+		}
+		if (charType == "dwarf") {
+			charHealth = 120;
+			break;
+		}
+		if (charType == "firelord") {
+			charHealth = 150;
+			break;
+		}
+		if (charType == "goblin") {
+			charHealth = 85;
+			break;
+		}
+		if (charType == "human") {
+			charHealth = 65;
+			break;
+		}
+		else {
+			charType = 100;
+		}	
+	}
+
+	cout << "\n";
 	cout << "Enter the Charachter Gender: ";
 	cin >> charGender;
 
 	// Small Little animation of Creating the Charachter
-	cout << "Creating Charachter. \n";
+	// For Loop Method Used
+
+	for (int i = 0; i < counter; i++) {
+		if (i == 0)
+			cout << "Creating Charachter.";
+		if (i == 1)
+			cout << "Creating Charachter..";
+		if (i == 2)
+			cout << "Creating Charachter...";
+
+		Sleep(400);
+		system("cls");
+	}
+
+	// Changing name, type and gender to upperCase from lowercase. 
+	charName[0] = toupper(charName[0]);
+	charType[0] = toupper(charType[0]);
+	charGender[0] = toupper(charGender[0]);
+	// Other bad example of creating the same Creating Charachter method Animation
+	/*cout << "Creating Charachter. \n";
 	Sleep(300);
 	system("cls");
 
@@ -113,7 +177,11 @@ int main() {
 
 	cout << "Charachter Created! \n";
 	Sleep(800);
-	system("cls");
+	system("cls");*/
+
+	// charHealth = 100;
+	charTotalHealth = charHealth;
+	charMaxHealth = charTotalHealth;
 
 	HUD();
 	Moving();
