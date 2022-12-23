@@ -1,4 +1,8 @@
-#include "Charachter.h"
+// Includes located below:
+#include <iostream>
+#include <windows.h>
+#include <string>
+#include <algorithm>
 
 // Using Directive
 using namespace std;
@@ -21,6 +25,19 @@ void CreateMonster();
 // Function LevelUP
 void LevelUP();
 
+// Global Variables for Characheter Below;
+string charName = " ";
+string charType = " ";
+string charGender = " ";
+
+int charLevel = 0;
+int charXP = 0;
+int charHealth = 0;
+int charTotalHealth = 0;
+int charMaxHealth = 0;
+int charLevelUP = 0;
+int charHeal = 0;
+
 // Global Variables for Monster Below;
 int monsterHP = 0;
 int monsterXP = 0;
@@ -32,18 +49,143 @@ int currentMonsterNames = 5;
 string currentMonster = " ";
 
 // Counter created for loading screen
-int counter = 0;
+int counter = 3;
 
-// Constructor to access its properties in main.cpp
-Charachter character;
+// Monster Type Array
+string playerType[] = { "eld", "dwarf", "firelord", "goblin", "human" };
 
 // Main Function
 int main() {
-	// Calling charachterCreation function from charachter
-	character.charachterCreation();
+
+	// Creating Level Up and Health System
+	charLevel = 1;
+	charXP = 0;
+	charLevelUP = 80;
+
+	cout << "####################### \n";
+	cout << "# SURVIVAL 'RPG' GAME # \n";
+	cout << "####################### \n";
+	Sleep(3000);
+	system("cls");
+
+	// Taking Charachter Data out And taking in to Assign to the Charachter Variables
+	// Creating Charachter
+	cout << "Enter the Charachter Name: ";
+	cin >> charName;
+
+	// Charachter Options
+	cout << "Enter the Charachter Type: \n";
+	cout << "Elf\n";
+	cout << "Dwarf\n";
+	cout << "Fire Lord\n";
+	cout << "goblin\n";
+	cout << "Human\n";
+	cout << "Type Here: \n\n";
+	cin >> charType;
+
+	// this sets the cin the player input into lowercase so it,
+	// matches the charType Array
+	for_each(charType.begin(), charType.end(), [](char& c) {
+		c = tolower(c);
+		});
+	// for loop for each charachter with their default HP when,
+	// selecting charachter
+	for (int i = 0; i < sizeof(playerType); i++) {
+		if (charType == "elf") {
+			charHealth = 80;
+			break;
+		}
+		if (charType == "dwarf") {
+			charHealth = 120;
+			break;
+		}
+		if (charType == "firelord") {
+			charHealth = 150;
+			break;
+		}
+		if (charType == "goblin") {
+			charHealth = 85;
+			break;
+		}
+		if (charType == "human") {
+			charHealth = 65;
+			break;
+		}
+		else {
+			charType = 100;
+		}
+	}
+
+	cout << "\n";
+	cout << "Enter the Charachter Gender: ";
+	cin >> charGender;
+
+	// Small Little animation of Creating the Charachter
+	// For Loop Method Used
+
+	for (int i = 0; i < counter; i++) {
+		if (i == 0)
+			cout << "Creating Charachter.";
+		if (i == 1)
+			cout << "Creating Charachter..";
+		if (i == 2)
+			cout << "Creating Charachter...";
+
+		Sleep(400);
+		system("cls");
+	}
+
+	// Changing name, type and gender to upperCase from lowercase. 
+	charName[0] = toupper(charName[0]);
+	charType[0] = toupper(charType[0]);
+	charGender[0] = toupper(charGender[0]);
+	// Other bad example of creating the same Creating Charachter method Animation
+	/*cout << "Creating Charachter. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter.. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter... \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter.. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter... \n";
+	Sleep(300);
+	system("cls");
+	cout << "Creating Charachter. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter.. \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Creating Charachter... \n";
+	Sleep(300);
+	system("cls");
+
+	cout << "Charachter Created! \n";
+	Sleep(800);
+	system("cls");*/
+
+	// charHealth = 100;
+	charTotalHealth = charHealth;
+	charMaxHealth = charTotalHealth;
 
 	HUD();
 	Moving();
+
 	system("pause");
 
 	return 0;
@@ -54,9 +196,9 @@ void HUD() {
 	Sleep(500);
 	system("cls");
 	cout << "Charachter information: \n";
-	cout << "Name: " << character.charName << "\nHealth: " << character.charTotalHealth << "\nType: " << character.charType
-		<< "\nGender: " << character.charGender << "\nLevel: " << character.level << "\nXP: " << character.current_XP
-		<< "\nXP to Level Up: " << character.levelUpXP << endl;
+	cout << "Name: " << charName << "\nHealth: " << charTotalHealth << "\nType: " << charType
+		<< "\nGender: " << charGender << "\nLevel: " << charLevel << "\nXP: " << charXP
+		<< "\nXP to Level Up: " << charLevelUP << endl;
 	Moving();
 }
 
@@ -64,8 +206,8 @@ void HUD() {
 void CombatHUD() {
 	Sleep(500);
 	system("cls");
-	cout << "Name: " << character.charName << "		|		Monster Name: " << currentMonster << "\nHealth: " << character.charTotalHealth << "		|		Monster Health: " << monsterHP <<
-		"\nLevel: " << character.level << "		|		Monster Level: " << monsterLevel << endl;
+	cout << "Name: " << charName << "		|		Monster Name: " << currentMonster << "\nHealth: " << charTotalHealth << "		|		Monster Health: " << monsterHP <<
+		"\nLevel: " << charLevel << "		|		Monster Level: " << monsterLevel << endl;
 }
 
 // Charachter Combat
@@ -74,10 +216,10 @@ void Combat() {
 	CombatHUD();
 
 	int charChoice;
-	int charDemage = 8 * character.level / 2;
+	int charDemage = 8 * charLevel / 2;
 	int monsterAttack = 6 * monsterLevel / 2;
 
-	if (character.charTotalHealth >= 1 && monsterHP >= 1) {
+	if (charTotalHealth >= 1 && monsterHP >= 1) {
 		cout << "\n";
 		cout << "1. Attack\n";
 		cout << "2. Block\n";
@@ -95,14 +237,14 @@ void Combat() {
 			if (monsterHP >= 1) {
 				cout << "\n";
 				cout << "Monster is Attacking!\n";
-				character.charTotalHealth = character.charTotalHealth - monsterAttack;
-				cout << "You just got Attacked by: " << currentMonster << "You have Lost: " << monsterAttack << " HP " << "You Health is now: " << character.charTotalHealth << endl;
+				charTotalHealth = charTotalHealth - monsterAttack;
+				cout << "You just got Attacked by: " << currentMonster << "You have Lost: " << monsterAttack << " HP " << "You Health is now: " << charTotalHealth << endl;
 
 				// Change to Function.
-				if (character.charTotalHealth <= 0) {
-					character.charTotalHealth = 0;
+				if (charTotalHealth <= 0) {
+					charTotalHealth = 0;
 					system("cls");
-					cout << "You Died! \n You were Level: " << character.level << "you got Killed by " << currentMonster << endl;
+					cout << "You Died! \n You were Level: " << charLevel << "you got Killed by " << currentMonster << endl;
 					Sleep(2000);
 					exit(0);
 
@@ -110,13 +252,9 @@ void Combat() {
 			}
 			else if (monsterHP <= 0) {
 				monsterHP = 0;
+				LevelUP();
 				cout << "\n";
 				cout << "You have Beaten " << currentMonster << " you have been Rewarded with " << monsterXP << "XP.\nMission Completed!\n";
-
-				if (character.level != character.maxLevel) {
-					character.current_XP = character.current_XP + monsterXP;
-					LevelUP();
-				}
 				Sleep(1000);
 				HUD();
 			}
@@ -129,16 +267,16 @@ void Combat() {
 			int i = rand() % 100 + 1;
 			if (i >= 50) {
 				cout << "You have Blocked the Attack!\n";
-				character.charHeal = character.level * 10 / 2;
-				cout << "You have Healed: " << character.charHeal << "HP" << endl;
-				character.charTotalHealth += character.charHeal;
+				charHeal = charLevel * 10 / 2;
+				cout << "You have Healed: " << charHeal << "HP" << endl;
+				charTotalHealth += charHeal;
 				Sleep(1000);
 				Combat();
 			}
 			else {
 				cout << "You hav Failed to Block the Monster Attack\n";
-				character.charTotalHealth -= monsterAttack;
-				cout << "You were Attacked for: " << monsterAttack << "Your HP is now: " << character.charTotalHealth << endl;
+				charTotalHealth -= monsterAttack;
+				cout << "You were Attacked for: " << monsterAttack << "Your HP is now: " << charTotalHealth << endl;
 				Sleep(1000);
 				Combat();
 			}
@@ -146,7 +284,7 @@ void Combat() {
 		else if (charChoice == 3) {
 			// RUN!!!
 			cout << "You try to Run!\n";
-			int x = rand() % 100 +1;
+			int x = rand() % 100 + 1;
 			if (x >= 50) {
 				cout << "You Ran awey from the Battle!\n";
 				HUD();
@@ -154,8 +292,8 @@ void Combat() {
 			else {
 				cout << "You have Failed to Run awey!\n";
 				cout << "Monster Attacked you!\n";
-				character.charTotalHealth -= monsterAttack + 10;
-				cout << "You Suffered " << monsterAttack + 10 << "You current Health is: " << character.charTotalHealth << endl;
+				charTotalHealth -= monsterAttack + 10;
+				cout << "You Suffered " << monsterAttack + 10 << "You current Health is: " << charTotalHealth << endl;
 				Sleep(1000);
 				Combat();
 			}
@@ -174,7 +312,7 @@ void Moving() {
 	int selection;
 
 	cout << "\n";
-	cout << "What would you Like to do Next?: " << character.charName << endl;
+	cout << "What would you Like to do Next?: " << charName << endl;
 	cout << "\n";
 	cout << "1. Move Forward\n";
 	cout << "2. Have Rest\n";
@@ -201,8 +339,8 @@ void Moving() {
 			Combat();
 		}
 		cout << "You Have Found Nothing Interesting.\n";
-			Sleep(1000);
-			HUD();
+		Sleep(1000);
+		HUD();
 
 	}
 	// Resting Selection Created
@@ -210,10 +348,10 @@ void Moving() {
 		// Text and if Char helth less then or equal to 99
 		// Then Char heals it self by 10 * charLevel
 		cout << "You Have Set up a Cozy Camp for The Evening.\n";
-		if (character.charTotalHealth <= 99) {
-			character.charTotalHealth += 10 * character.level;
+		if (charTotalHealth <= 99) {
+			charTotalHealth += 10 * charLevel;
 		}
-		cout << "You Have Healed by Resting. Health is now: " << character.charTotalHealth << endl;
+		cout << "You Have Healed by Resting. Health is now: " << charTotalHealth << endl;
 		Sleep(1000);
 		HUD();
 	}
@@ -246,31 +384,24 @@ void Moving() {
 
 // Charachter LevelUP
 void LevelUP() {
-	// Level and level up system created
-	if (character.current_XP >= character.levelUpXP) {
-		character.levelUpXP += floor(character.level + 25 * pow(2, character.level / 7));
-		character.charTotalHealth = floor(character.charTotalHealth + 13 * pow(2, character.level / 8));
-		if (character.level >= character.minLevel <= character.maxLevel) {
-			character.level++;
-		}
-		else {
-			character.level = 60;
-		}
-		character.charMaxHealth = character.charTotalHealth;
-		cout << "Hey, " << character.charName << "You have just been Leveled-up! " << character.level << endl;
-		cout << "You Max Health has been Incresead. You total Health is now: " << character.charTotalHealth << endl;
-		cout << "\n";
-		Sleep(1000);
-		LevelUP();
-	}
-	Sleep(2000);
-	HUD();
-}
+	charXP = charXP + monsterXP;
 
+	// Level up feature below
+	if (charXP >= charLevelUP) {
+		charLevel++;
+		charLevelUP = charLevelUP * 3 / 2;
+		charTotalHealth = charTotalHealth + 20;
+		charMaxHealth = charTotalHealth;
+		cout << "Hey, " << charName << "You have just been Leveled-up! " << charLevel << endl;
+		cout << "You Max Health has been Incresead by 20 HP. You total Health is now: " << charTotalHealth << endl;
+		Sleep(2000);
+		HUD();
+	}
+}
 // Create Monster
 void CreateMonster() {
 	monsterHP = 30;
-	monsterLevel = (rand() % 3) + character.level;
+	monsterLevel = (rand() % 3) + charLevel;
 
 	// If Monster level equal 0 then monster level value goes between 3 + charLevel
 	// This is to stop monster to have health 0
