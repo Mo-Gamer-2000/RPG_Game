@@ -4,7 +4,6 @@
 #include <memory>    // for std::unique_ptr
 #include <algorithm> // for std::copy
 
-int main() {
     // Player class
     class Player
     {
@@ -58,4 +57,59 @@ int main() {
         int defense;
         int gold;
     };
+
+    int main() {
+        // Create a unique pointer to a dynamically-allocated array of player objects
+        std::unique_ptr<Player[]> players = std::make_unique<Player[]>(8);
+
+        // Game loop
+        for (int i = 0; i < 8; i++)
+        {
+            std::cout << "You are in a dungeon. What do you want to do?" << std::endl;
+            std::cout << "1. Go north" << std::endl;
+            std::cout << "2. Go east" << std::endl;
+            std::cout << "3. Go south" << std::endl;
+            std::cout << "4. Go west" << std::endl;
+            std::cout << "5. Attack monster" << std::endl;
+            std::cout << "6. Open chest" << std::endl;
+            std::cout << "7. Drink potion" << std::endl;
+            std::cout << "8. Quit game" << std::endl;
+
+            int choice;
+            std::cin >> choice;
+
+            if (choice == 1)
+            {
+                players[i].goNorth();
+            }
+            else if (choice == 2)
+            {
+                players[i].goEast();
+            }
+            else if (choice == 3)
+            {
+                players[i].goSouth();
+            }
+            else if (choice == 4)
+            {
+                players[i].goWest();
+            }
+            else if (choice == 5)
+            {
+                players[i].attack();
+            }
+            else if (choice == 6)
+            {
+                players[i].openChest();
+            }
+            else if (choice == 7)
+            {
+                players[i].drinkPotion();
+            }
+            else if (choice == 8)
+            {
+                players[i].quit();
+                break;
+            }
+        }
 }
