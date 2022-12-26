@@ -3,11 +3,13 @@
 
 using namespace std;
 
+// Class definition for a Player
 class Player {
 
 public:
-
-    // Constructor Player with Variables / PUBLIC - PRIVATE
+    // Constructor for the Player class
+    // This function is called whenever a new Player object is created
+    // It initializes the player's health, attack power, defense, and gold to specific values
     Player() {
         health = 100;
         attackPower = 10;
@@ -15,68 +17,69 @@ public:
         gold = 0;
     }
 
-    // goNorth Function
+    // Member function that allows the player to move towards the north
     void goNorth()
     {
-        // Initializes goNorth
+        // Prints a message indicating that the player has found a monster while moving towards the north
         cout << "You Walked Towards North and Found a Monster!" << endl;
     }
 
-    // goEast Function
+    // Member function that allows the player to move towards the east
     void goEast()
     {
-        // Initializes goEast
+        // Prints a message indicating that the player has found a treasure chest while moving towards the east
         cout << "You Walked Towards East and Found a Treasure Chest!" << endl;
     }
 
-    // goSouth Function
+    // Member function that allows the player to move towards the south
     void goSouth()
     {
-        // Initializes goSouth
+        // Prints a message indicating that the player has found a potion while moving towards the south
         cout << "You Walked Towards South and Found a Potion!" << endl;
     }
 
-    // goWest Function
+    // Member function that allows the player to move towards the west
     void goWest()
     {
-        // Initializes goWest
+        // Prints a message indicating that the player has found a staircase leading to the next level while moving towards the west
         cout << "You Walked Towards West and Found a Staircase leading to the Next Level." << endl;
     }
 
-    // Attack Function
+    // Member function that allows the player to attack a monster
     void attack()
     {
-        // Initializes attack
+        // Prints a message indicating the amount of damage dealt to the monster
         cout << "You Attacked the Monster and Dealt " << attackPower << " Damage." << endl;
     }
 
-    // openChest Function
+    // Member function that allows the player to open a treasure chest
     void openChest()
     {
-        // Initializes openChest
+        // Prints a message indicating that the player has found a golden coin in the treasure chest and adds it to the player's stash
         cout << "You Found a Golden Coin in the Tresure Chest and it has been added to your Stash." << endl;
         gold++;
     }
 
-    // drinkPotion Function
+    // Member function that allows the player to drink a potion
     void drinkPotion()
     {
-        // Initializes drinkPotion
+        // Prints a message indicating that the player has restored some health by drinking a potion
         cout << "You Drank the Potion and Restored 20 Health." << endl;
         health += 20;
     }
 
-    // Quit Function
+    // Member function that allows the player to quit the game
     void quit()
     {
-        // Initializes Quit
+        // Prints a message indicating that the player has quit the game
         cout << "Thanks for Playing!" << endl;
     }
 
 private:
+    // Member variables for the player's health, attack power, defense, and gold
+    // These variables are private and can only be accessed and modified from within the Player class or by friend functions and classes
     int health;
     int attackPower;
     int defense;
     int gold;
-
 };
