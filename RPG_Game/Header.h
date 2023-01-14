@@ -24,3 +24,9 @@
 
 // The thread library provides functions for working with threads
 #include <thread>
+
+#include <cstdlib>
+
+#include <ctime>
+
+#include <map>

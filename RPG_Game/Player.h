@@ -75,6 +75,8 @@ public:
         cout << "Thanks for Playing!" << endl;
     }
 
+
+
 private:
     // Member variables for the player's health, attack power, defense, and gold
     // These variables are private and can only be accessed and modified from within the Player class or by friend functions and classes

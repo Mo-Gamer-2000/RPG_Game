@@ -1,11 +1,14 @@
-#include "Player.h"  // Include the header file for the Player class
+#include "Player.h" // Include the header file for the Player class
+#include "Monster.h"
+#include "Header.h" // Include the header file for the Player class
 
 // Class definition for the Game class
-class Game {
+class Game
+{
 public:
-
     // Member function that displays some text and waits for the user to press Enter
-    void start() {
+    void start()
+    {
 
         // Print a message asking the user to press Enter
         std::cout << "Press Enter to Start the Game" << std::endl;
@@ -18,14 +21,16 @@ public:
     }
 };
 
-class Intro {
+class Intro
+{
 public:
-
     // Display Function has a Loading Screen and Displays Text.
-    void display() {
+    void display()
+    {
 
         // Display the Loading Animation.
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100; i++)
+        {
             // Print the current loading percentage to the console.
             std::cout << "Loading: " << i << "%" << std::endl;
 
@@ -37,27 +42,28 @@ public:
         }
 
         // Display the Text "WELCOME TO MY GAME".
-        std::cout << " ____ " << std::endl;
-        std::cout << "|    |" << std::endl;
-        std::cout << "| W  |" << std::endl;
-        std::cout << "| E  |" << std::endl;
-        std::cout << "| L  |" << std::endl;
-        std::cout << "| C  |" << std::endl;
-        std::cout << "| O  |" << std::endl;
-        std::cout << "| M  |" << std::endl;
-        std::cout << "| E  |" << std::endl;
-        std::cout << "|    |" << std::endl;
-        std::cout << "| T  |" << std::endl;
-        std::cout << "| O  |" << std::endl;
-        std::cout << "|    |" << std::endl;
-        std::cout << "| M  |" << std::endl;
-        std::cout << "| Y  |" << std::endl;
-        std::cout << "|    |" << std::endl;
-        std::cout << "| G  |" << std::endl;
-        std::cout << "| A  |" << std::endl;
-        std::cout << "| M  |" << std::endl;
-        std::cout << "| E  |" << std::endl;
-        std::cout << "|____|" << std::endl;
+        std::cout << "\033[1;32m" << " ___ " << std::endl;
+        std::cout << "|   |" << std::endl;
+        std::cout << "| W |" << std::endl;
+        std::cout << "| E |" << std::endl;
+        std::cout << "| L |" << std::endl;
+        std::cout << "| C |" << std::endl;
+        std::cout << "| O |" << std::endl;
+        std::cout << "| M |" << std::endl;
+        std::cout << "| E |" << std::endl;
+        std::cout << "|   |" << std::endl;
+        std::cout << "| T |" << std::endl;
+        std::cout << "| O |" << std::endl;
+        std::cout << "|   |" << std::endl;
+        std::cout << "| M |" << std::endl;
+        std::cout << "| Y |" << std::endl;
+        std::cout << "|   |" << std::endl;
+        std::cout << "| G |" << std::endl;
+        std::cout << "| A |" << std::endl;
+        std::cout << "| M |" << std::endl;
+        std::cout << "| E |" << std::endl;
+        std::cout << "|___|" << std::endl;
+        std::cout << "\033[0m" << std::endl;
     }
 
 private:
@@ -65,10 +71,10 @@ private:
     const int kFrameRate_ = 30;
 };
 
-class HUD {
+class HUD
+{
 
 public:
-
     // Constructor to initialize Name, Gender and Type.
     HUD(std::string name, std::string gender, std::string type) : name_(name), gender_(gender), type_(type) {}
 
@@ -78,14 +84,18 @@ public:
     std::string getType() const { return type_; }
 
 private:
-
     // Member variables to store the Name, Gender and Type.
     std::string name_;
     std::string gender_;
     std::string type_;
 };
 
-int main() {
+//Initialize player position
+int playerX = 0;
+int playerY = 0;
+
+int main()
+{
     // Run class game.
     Game game;
     game.start();
@@ -103,9 +113,11 @@ int main() {
     std::string type;
 
     // Prompt the user to enter the name, gender, and type of their character.
+    std::cout << "\033[1;32m" << std::endl;
     std::cout << "--------------------------" << std::endl;
     std::cout << "|  BUILD YOUR CHARACTER  |" << std::endl;
     std::cout << "--------------------------" << std::endl;
+    std::cout << "\033[0m" << std::endl;
     std::cout << "Enter Name of your Character: ";
     std::cin >> name;
     std::cout << "Enter Gender of your Character (Male/Female): ";
@@ -118,14 +130,16 @@ int main() {
 
     // Animation of Creating the Charachter.
     // For Loop Method Used
-    for (int i = 0; i <= counter; i++) {
+    for (int i = 0; i <= counter; i++)
+    {
         if (i == 0)
             cout << "Building Charachter.";
         if (i == 1)
             cout << "Building Charachter..";
         if (i == 2)
             cout << "Building Charachter...";
-        if (i == 3) {
+        if (i == 3)
+        {
             cout << "Building Charachter....";
             break;
         }
@@ -157,68 +171,101 @@ int main() {
     std::cout << "---------------------------" << std::endl;
     std::cout << " " << std::endl;
 
-    // Created a Unique Pointer to a Dynamically-Allocated array of Player Objects
-    std::unique_ptr<Player[]> players = std::make_unique<Player[]>(8);
+    // Create a 2-dimensional dynamic array to represent the game map
+    int mapX = 10;
+    int mapY = 10;
+    std::unique_ptr<std::unique_ptr<Player[]>[]> map = std::make_unique<std::unique_ptr<Player[]>[]>(mapX);
+    for (int i = 0; i < mapX; i++) {
+        map[i] = std::make_unique<Player[]>(mapY);
+    }
 
-    // Loop through each player
-    for (int i = 0; i < 8; i++)
-    {
+    // variable to check if the player wants to quit
+    bool quit = false;
+
+    // Loop through until the player chooses to quit
+    while (!quit) {
         // Print a message to the console with the player's name
-        std::cout << hud.getName() << " you are in a Dungeon! What do you want to do?" << std::endl;
+        std::cout << "You are in a Dungeon! What do you want to do?" << std::endl;
+        std::cout << "Your current position is X: " << playerX << " Y: " << playerY << std::endl;
 
         // Print a list of options to the console
-        std::cout << "1. Go North" << std::endl;
-        std::cout << "2. Go East" << std::endl;
-        std::cout << "3. Go South" << std::endl;
-        std::cout << "4. Go West" << std::endl;
+        std::cout << "W. Go North" << std::endl;
+        std::cout << "A. Go West" << std::endl;
+        std::cout << "S. Go South" << std::endl;
+        std::cout << "D. Go East" << std::endl;
         std::cout << "5. Attack Monster" << std::endl;
         std::cout << "6. Open Treasure Chest" << std::endl;
         std::cout << "7. Drink Potion" << std::endl;
         std::cout << "8. Quit Game" << std::endl;
 
-        // Get the player's choice as an integer
-        int choice;
+        // Get the player's choice as a character
+        char choice;
         std::cin >> choice;
+        choice = toupper(choice);
 
         // Execute the corresponding action based on the player's choice
-        if (choice == 1)
+        if (choice == 'W')
         {
-            players[i].goNorth();
+            if (playerY > 0) {
+                map[playerX][playerY].goNorth();
+                playerY--;
+            }
+            else {
+                std::cout << "Cannot go North, Out of Map" << std::endl;
+                continue;
+            }
         }
-        else if (choice == 2)
+        else if (choice == 'A')
         {
-            players[i].goEast();
+            if (playerX > 0) {
+                map[playerX][playerY].goWest();
+                playerX--;
+            }
+            else {
+                std::cout << "Cannot go West, Out of Map" << std::endl;
+                continue;
+            }
         }
-        else if (choice == 3)
+        else if (choice == 'S')
         {
-            players[i].goSouth();
+            if (playerY < mapY - 1) {
+                map[playerX][playerY].goSouth();
+                playerY++;
+            }
+            else {
+                std::cout << "Cannot go South, Out of Map" << std::endl;
+                continue;
+            }
         }
-        else if (choice == 4)
+        else if (choice == 'D')
         {
-            players[i].goWest();
+            if (playerX < mapX - 1) {
+                map[playerX][playerY].goEast();
+                playerX++;
+            }
+            else {
+                std::cout << "Cannot go East, Out of Map" << std::endl;
+                continue;
+            }
         }
-        else if (choice == 5)
+        else if (choice == '5')
         {
-            players[i].attack();
+            map[playerX][playerY].attack();
         }
-        else if (choice == 6)
+        else if (choice == '6')
         {
-            players[i].openChest();
+            map[playerX][playerY].openChest();
         }
-        else if (choice == 7)
+        else if (choice == '7')
         {
-            players[i].drinkPotion();
+            map[playerX][playerY].drinkPotion();
         }
-
-        // If the player chooses to quit the game, call the quit() function and exit the loop
-        else if (choice == 8)
+        else if (choice == '8')
         {
-            players[i].quit();
-            break;
+            map[playerX][playerY].quit();
+            quit = true;
         }
     }
-
-    // Return 0 to indicate that the program has finished successfully
     return 0;
 }
 
