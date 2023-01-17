@@ -1,19 +1,19 @@
 #pragma once
+#include "Header.h"
 
 class Monster {
 public:
+    // Constructor for the Monster class
     Monster() {
         health = 50;
-        attackPower = 5;
-        defense = 2;
+        attackPower = 15;
     }
-    int getHealth() { return health; }
-    int getAttackPower() { return attackPower; }
-    int getDefense() { return defense; }
-    void setHealth(int newHealth) { health = newHealth; }
+
+    int getHealth() const { return health; }
+    int getAttackPower() const { return attackPower; }
+    void setHealth(int value) { health = value; }
 
 private:
     int health;
     int attackPower;
-    int defense;
 };

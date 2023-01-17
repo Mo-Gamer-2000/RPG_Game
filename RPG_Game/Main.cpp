@@ -1,94 +1,5 @@
-#include "Player.h" // Include the header file for the Player class
-#include "Monster.h"
-#include "Header.h" // Include the header file for the Player class
-
-// Class definition for the Game class
-class Game
-{
-public:
-    // Member function that displays some text and waits for the user to press Enter
-    void start()
-    {
-
-        // Print a message asking the user to press Enter
-        std::cout << "Press Enter to Start the Game" << std::endl;
-
-        // Wait for the user to press Enter
-        std::cin.get();
-
-        // Print a message indicating that the game has started
-        std::cout << "Starting the Game!" << std::endl;
-    }
-};
-
-class Intro
-{
-public:
-    // Display Function has a Loading Screen and Displays Text.
-    void display()
-    {
-
-        // Display the Loading Animation.
-        for (int i = 0; i < 100; i++)
-        {
-            // Print the current loading percentage to the console.
-            std::cout << "Loading: " << i << "%" << std::endl;
-
-            // Pause for 1000 milliseconds divided by the frame rate.
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000 / kFrameRate_));
-
-            // Clear the console.
-            system("cls");
-        }
-
-        // Display the Text "WELCOME TO MY GAME".
-        std::cout << "\033[1;32m" << " ___ " << std::endl;
-        std::cout << "|   |" << std::endl;
-        std::cout << "| W |" << std::endl;
-        std::cout << "| E |" << std::endl;
-        std::cout << "| L |" << std::endl;
-        std::cout << "| C |" << std::endl;
-        std::cout << "| O |" << std::endl;
-        std::cout << "| M |" << std::endl;
-        std::cout << "| E |" << std::endl;
-        std::cout << "|   |" << std::endl;
-        std::cout << "| T |" << std::endl;
-        std::cout << "| O |" << std::endl;
-        std::cout << "|   |" << std::endl;
-        std::cout << "| M |" << std::endl;
-        std::cout << "| Y |" << std::endl;
-        std::cout << "|   |" << std::endl;
-        std::cout << "| G |" << std::endl;
-        std::cout << "| A |" << std::endl;
-        std::cout << "| M |" << std::endl;
-        std::cout << "| E |" << std::endl;
-        std::cout << "|___|" << std::endl;
-        std::cout << "\033[0m" << std::endl;
-    }
-
-private:
-    // Number of FPS (frames per second).
-    const int kFrameRate_ = 30;
-};
-
-class HUD
-{
-
-public:
-    // Constructor to initialize Name, Gender and Type.
-    HUD(std::string name, std::string gender, std::string type) : name_(name), gender_(gender), type_(type) {}
-
-    // Accessor functions to retrieve the Name, Gender and Type.
-    std::string getName() const { return name_; }
-    std::string getGender() const { return gender_; }
-    std::string getType() const { return type_; }
-
-private:
-    // Member variables to store the Name, Gender and Type.
-    std::string name_;
-    std::string gender_;
-    std::string type_;
-};
+#pragma once
+#include "Header.h"
 
 //Initialize player position
 int playerX = 0;
@@ -97,12 +8,23 @@ int playerY = 0;
 int main()
 {
     // Run class game.
-    Game game;
+    startGame game;
     game.start();
 
     // Run class display.
     Intro intro;
     intro.display();
+
+    Location location("start", 0, 0); // create an object of the class and initialize it with the constructor
+    std::cout << "Name: " << location.getName() << std::endl; // access the name using the getName() function
+    std::cout << "X: " << location.getX() << std::endl; // access the X using the getX() function
+    std::cout << "Y: " << location.getY() << std::endl; // access the Y using the getY() function
+
+    HUD hudObject("Bob", "Male", "Theif"); // create an object of the class and initialize it with the constructor
+    std::cout << "Example: " << std::endl;
+    std::cout << "Name: " << hudObject.getName() << std::endl; // access the name using the getName() function
+    std::cout << "Gender: " << hudObject.getGender() << std::endl; // access the gender using the getGender() function
+    std::cout << "Type: " << hudObject.getType() << std::endl; // access the type using the getType() function
 
     // Counter created for creating character For loop.
     int counter = 0;
@@ -174,6 +96,8 @@ int main()
     // Create a 2-dimensional dynamic array to represent the game map
     int mapX = 10;
     int mapY = 10;
+
+    // Smart Pointer = Unique_Pinter retriving cout from players class
     std::unique_ptr<std::unique_ptr<Player[]>[]> map = std::make_unique<std::unique_ptr<Player[]>[]>(mapX);
     for (int i = 0; i < mapX; i++) {
         map[i] = std::make_unique<Player[]>(mapY);
@@ -193,10 +117,10 @@ int main()
         std::cout << "A. Go West" << std::endl;
         std::cout << "S. Go South" << std::endl;
         std::cout << "D. Go East" << std::endl;
-        std::cout << "5. Attack Monster" << std::endl;
-        std::cout << "6. Open Treasure Chest" << std::endl;
-        std::cout << "7. Drink Potion" << std::endl;
-        std::cout << "8. Quit Game" << std::endl;
+        std::cout << "Y. Attack Monster" << std::endl;
+        std::cout << "U. Open Treasure Chest" << std::endl;
+        std::cout << "I. Drink Potion" << std::endl;
+        std::cout << "Q. Quit Game" << std::endl;
 
         // Get the player's choice as a character
         char choice;
@@ -248,19 +172,19 @@ int main()
                 continue;
             }
         }
-        else if (choice == '5')
+        else if (choice == 'Y')
         {
             map[playerX][playerY].attack();
         }
-        else if (choice == '6')
+        else if (choice == 'U')
         {
             map[playerX][playerY].openChest();
         }
-        else if (choice == '7')
+        else if (choice == 'I')
         {
             map[playerX][playerY].drinkPotion();
         }
-        else if (choice == '8')
+        else if (choice == 'Q')
         {
             map[playerX][playerY].quit();
             quit = true;
