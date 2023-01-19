@@ -5,7 +5,8 @@
 class startGame
 {
 public:
-    // Member function that displays some text and waits for the user to press Enter
+    // Member function that displays some text and waits for the user to press
+    // Enter
     void start()
     {
 

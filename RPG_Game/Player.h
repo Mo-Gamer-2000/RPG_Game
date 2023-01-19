@@ -1,87 +1,125 @@
 #pragma once
 #include "Header.h"
 
-using namespace std;
-
-// Class definition for a Player
-class Player {
-
+class Player
+{
 public:
-    // Constructor for the Player class
-    // This function is called whenever a new Player object is created
-    // It initializes the player's health, attack power, defense, and gold to specific values
-    Player() {
-        health = 100;
-        attackPower = 10;
-        defense = 5;
-        gold = 0;
-    }
-
-    // Member function that allows the player to move towards the north
-    void goNorth()
-    {
-        // Prints a message indicating that the player has found a monster while moving towards the north
-        cout << "You Walked Towards North and Found a Monster!" << endl;
-    }
-
-    // Member function that allows the player to move towards the east
-    void goEast()
-    {
-        // Prints a message indicating that the player has found a treasure chest while moving towards the east
-        cout << "You Walked Towards East and Found a Treasure Chest!" << endl;
-    }
-
-    // Member function that allows the player to move towards the south
-    void goSouth()
-    {
-        // Prints a message indicating that the player has found a potion while moving towards the south
-        cout << "You Walked Towards South and Found a Potion!" << endl;
-    }
-
-    // Member function that allows the player to move towards the west
-    void goWest()
-    {
-        // Prints a message indicating that the player has found a staircase leading to the next level while moving towards the west
-        cout << "You Walked Towards West and Found a Staircase leading to the Next Level." << endl;
-    }
-
-    // Member function that allows the player to attack a monster
-    void attack()
-    {
-        // Prints a message indicating the amount of damage dealt to the monster
-        cout << "You Attacked the Monster and Dealt " << attackPower << " Damage." << endl;
-    }
-
-    // Member function that allows the player to open a treasure chest
-    void openChest()
-    {
-        // Prints a message indicating that the player has found a golden coin in the treasure chest and adds it to the player's stash
-        cout << "You Found a Golden Coin in the Tresure Chest and it has been added to your Stash." << endl;
-        gold++;
-    }
-
-    // Member function that allows the player to drink a potion
-    void drinkPotion()
-    {
-        // Prints a message indicating that the player has restored some health by drinking a potion
-        cout << "You Drank the Potion and Restored 20 Health." << endl;
-        health += 20;
-    }
-
-    // Member function that allows the player to quit the game
-    void quit()
-    {
-        // Prints a message indicating that the player has quit the game
-        cout << "Thanks for Playing!" << endl;
-    }
-
-
-
-private:
-    // Member variables for the player's health, attack power, defense, and gold
-    // These variables are private and can only be accessed and modified from within the Player class or by friend functions and classes
+    // existing member variables and functions
+    bool encounteredMonster_;
+    // constructor and other member functions
+    bool encounteredMonster() { return encounteredMonster_; }
+    std::string name;
+    std::string gender;
+    std::string type;
     int health;
-    int attackPower;
-    int defense;
+    int attack;
     int gold;
+    int XP;
+    int level;
+
+    Player(std::string n, std::string g, std::string t, int h, int a)
+        : name(n), gender(g), type(t), health(h), attack(a), gold(0), XP(0), level(1) {}
+
+    void attackMonster(std::unique_ptr<Monster>& m)
+    {
+        m->health -= attack;
+        std::cout << "Player deals " << attack << " damage to the monster.\n";
+        std::cout << "Monster has " << m->health << " health remaining.\n";
+    }
+
+    void bribeMonster(std::unique_ptr<Monster>& m)
+    {
+        std::cout << "Player bribed the monster for " << m->gold << " gold.\n" << "You had a Meal with the Monster and gained 15 Health\n";
+        gold -= m->gold;
+        XP += m->XP / 2;
+        health += m->health + 15;
+    }
+
+    void takeDamage(int damage)
+    {
+        health -= damage;
+        std::cout << "Player takes " << damage << " damage.\n";
+        std::cout << "Player has " << health << " health remaining.\n";
+    }
+
+    void reward(std::unique_ptr<Monster>& m)
+    {
+        gold += m->gold;
+        XP += m->XP;
+        health += m->health + 25;
+        std::cout << "Player earns " << m->gold << " gold and " << m->XP << " XP.\n";
+    }
+
+    void displayBattleHUD()
+    {
+        std::cout << "\n";
+        std::cout << "Player Information\n";
+        std::cout << "Name: " << name << "\n";
+        std::cout << "Gender: " << gender << "\n";
+        std::cout << "Type: " << type << "\n";
+        std::cout << "Health: " << health << "\n";
+        std::cout << "Gold: " << gold << "\n";
+        std::cout << "XP: " << XP << "\n";
+        std::cout << "Level: " << level << "\n";
+        std::cout << "\n";
+    }
+
+    void levelUp()
+    {
+        if (XP >= 60)
+        {
+            XP = 0;
+            level++;
+            attack += 5;
+            health += 15;
+            std::cout << "Level Up!\n";
+        }
+    }
+
+    void travel(std::string destination)
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(1, 2);
+        int random = dis(gen);
+        if (random == 1)
+        {
+            std::cout << "Then suddenly from a bush a Monster faced Bob.\n";
+            std::unique_ptr<Monster> monster = std::make_unique<Monster>(55, 12, 23, 15);
+            while (monster->health > 0)
+            {
+                std::cout << "What do you want to do Bob?\n";
+                std::cout << "1. Attack the Monster\n";
+                std::cout << "2. Bribe the Monster\n";
+                std::cout << "3. Run Away from the Monster\n";
+                int choice;
+                std::cin >> choice;
+                if (choice == 1)
+                {
+                    attackMonster(monster);
+                    takeDamage(monster->attack);
+                    if (health <= 0)
+                    {
+                        std::cout << "You died!\n";
+                        break;
+                    }
+                }
+                else if (choice == 2)
+                {
+                    bribeMonster(monster);
+                    break;
+                }
+                else
+                {
+                    std::cout << "You ran away from the monster like a coward!\n";
+                    break;
+                }
+            }
+            if (monster->health <= 0)
+            {
+                reward(monster);
+                levelUp();
+            }
+        }
+    }
 };

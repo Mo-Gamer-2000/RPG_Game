@@ -1,21 +1,13 @@
 #pragma once
-
-// Includes several standard C++ libraries
 #include <iostream>
-#include <string>
-#include <memory>
-#include <algorithm>
-#include <windows.h>
 #include <chrono>
+#include <memory>
+#include <random>
 #include <thread>
-#include <cstdlib>
-#include <ctime>
-#include <map>
+#include <vector>
 
-// .H FILES
-#include "Player.h"
-#include "Monster.h"
+#include "Monster.h" 
+#include "Player.h" 
 #include "startGame.h"
 #include "Intro.h"
-#include "HUD.h"
-#include "Location.h"
+#include "myGame.h"

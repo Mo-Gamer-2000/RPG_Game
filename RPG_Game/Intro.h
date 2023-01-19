@@ -1,3 +1,6 @@
+#pragma once
+#include "Header.h"
+
 class Intro
 {
 public:
@@ -12,7 +15,8 @@ public:
             std::cout << "Loading: " << i << "%" << std::endl;
 
             // Pause for 1000 milliseconds divided by the frame rate.
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000 / kFrameRate_));
+            std::this_thread::sleep_for(
+                std::chrono::milliseconds(1000 / kFrameRate_));
 
             // Clear the console.
             system("cls");
@@ -40,6 +44,12 @@ public:
         std::cout << "| M  |" << std::endl;
         std::cout << "| E  |" << std::endl;
         std::cout << "|____|" << std::endl;
+
+        std::cout << "In a Mythical land, far awey from Civilazation, there was a Warrior named Bob" << ".\n";
+        std::cout << "He loved going on Adventures and once he was Travelling through the Forest" << ".\n";
+        std::cout << "Suddenly, a Monstrous beast emerged from the bushes" << ".\n";
+        std::cout << "Bob, being a skilled Warrior, immediately drew his sword and prepared to defend himself against the Monster" << ".\n";
+
     }
 
 private:
