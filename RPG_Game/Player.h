@@ -17,9 +17,11 @@ public:
     int XP;
     int level;
 
+    // constructor that initializes the player's attributes when a new player object is created
     Player(std::string n, std::string g, std::string t, int h, int a)
         : name(n), gender(g), type(t), health(h), attack(a), gold(0), XP(0), level(1) {}
 
+    // function to attack a monster
     void attackMonster(std::unique_ptr<Monster>& m)
     {
         m->health -= attack;
@@ -27,6 +29,7 @@ public:
         std::cout << "Monster has " << m->health << " health remaining.\n";
     }
 
+    // function to bribe a monster
     void bribeMonster(std::unique_ptr<Monster>& m)
     {
         std::cout << "Player bribed the monster for " << m->gold << " gold.\n" << "You had a Meal with the Monster and gained 15 Health\n";
@@ -35,6 +38,7 @@ public:
         health += m->health + 15;
     }
 
+    // function to take damage
     void takeDamage(int damage)
     {
         health -= damage;
@@ -42,6 +46,7 @@ public:
         std::cout << "Player has " << health << " health remaining.\n";
     }
 
+    // function to earn rewards
     void reward(std::unique_ptr<Monster>& m)
     {
         gold += m->gold;
@@ -50,6 +55,7 @@ public:
         std::cout << "Player earns " << m->gold << " gold and " << m->XP << " XP.\n";
     }
 
+    // function to display the player's information
     void displayBattleHUD()
     {
         std::cout << "\n";
@@ -64,6 +70,7 @@ public:
         std::cout << "\n";
     }
 
+    // function to level up
     void levelUp()
     {
         if (XP >= 60)
@@ -76,6 +83,7 @@ public:
         }
     }
 
+    // function to travel to different locations
     void travel(std::string destination)
     {
         std::random_device rd;
